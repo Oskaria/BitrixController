@@ -141,7 +141,7 @@ var_export(json_decode(urldecode($output['text']), true));
 */
 
 
-
+/*
 // разрегистрация
 
 $parameters = array();
@@ -170,5 +170,5 @@ $html = curl_exec($ch);
 curl_close($ch);	
 
 echo $html;
-
+*/
 ?>

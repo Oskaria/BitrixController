@@ -36,7 +36,10 @@ iframe {
     display: inline-block;
     min-width: 130px;
     padding: 0px 30px;
-    background-color: rgb(0, 89, 255);
+    
+    background: rgb(180,109,164);
+    background: linear-gradient(90deg, rgba(180,109,164,1) 0%, rgba(255,120,172,1) 50%, rgba(250,119,172,1) 100%);    
+
     text-align: center;
     color: white !important;
     font-size: 16px;
@@ -121,7 +124,7 @@ a {
     display: inline-block;
     text-decoration: none;
     position: relative;
-    color: rgb(0, 89, 255);
+    color: #b46da4;
 }
     a:after {
         display: block;
@@ -130,7 +133,7 @@ a {
         content: "";
         height: 1px;
         bottom: 0px;
-        background-color: rgb(0, 89, 255);
+        background-color: #b46da4;
         transition: 0.3s;
     }
     a:hover:after {
@@ -171,7 +174,6 @@ a {
         height: 70px;
         vertical-align: middle;
         margin-right: 20px;
-        fill: rgb(0, 89, 255);
     }
 
 .breadcrumbs {
@@ -353,7 +355,7 @@ div.right, div.left {
         transition: 0.3s;
     }
         .playbutton:hover svg {
-            fill: rgb(0, 89, 255);
+            fill: #b46da4;
         }
   
 .logo_video {
