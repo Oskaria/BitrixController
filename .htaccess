@@ -1,0 +1,26 @@
+RewriteEngine On
+RewriteBase /
+
+RewriteCond %{REQUEST_FILENAME} !-f
+
+RewriteCond %{REQUEST_URI} !-f
+RewriteCond %{REQUEST_URI} !^/uploads
+RewriteCond %{REQUEST_URI} !^/assets
+RewriteCond %{REQUEST_URI} !^/administrasion
+RewriteRule ^([^/]+)/$ ?module=$1 [L,QSA]
+RewriteRule ^([^/]+)/([^/]+)/$ ?module=$1&page=$2 [L,QSA]
+RewriteRule ^([^/]+)/([^/]+)/([^/]+)/$ ?module=$1&page=$2&id=$3 [L,QSA]
+
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_URI} !-f
+RewriteCond %{REQUEST_URI} !.html$
+RewriteCond %{REQUEST_URI} !^/uploads
+RewriteCond %{REQUEST_URI} !^/assets
+RewriteCond %{REQUEST_URI} !^/administrasion
+RewriteRule (.+) $1/ [R=301,L]
+
+<IfModule mod_headers.c>
+    Header set Access-Control-Allow-Origin "*"
+    Header set Access-Control-Allow-Headers "*"
+</IfModule>

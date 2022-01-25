@@ -21,46 +21,7 @@
     <body>
     <div class="wrapper">
 
-        <!-- <div class="popup-wrap"></div>
-        <div class="popup register">
-            <div class="title">Регистрация</div>
-            <form class="form">
-                <div class="inputgroup">
-                    <label>Имя</label>
-                    <input type="text" name="name">
-                    <div class="errortext"></div>
-                </div>
-                <div class="inputgroup">
-                    <label>Фамилия</label>
-                    <input type="text" name="lastname">
-                    <div class="errortext"></div>
-                </div>
-                <div class="inputgroup">
-                    <label>Никнейм <span class="require">*</span></label>
-                    <input type="text" name="nickname">
-                    <div class="errortext"></div>
-                </div>
-                <div class="inputgroup">
-                    <label>Email <span class="require">*</span></label>
-                    <input type="text" name="email">
-                    <div class="errortext"></div>
-                </div>
-                <div class="inputgroup">
-                    <label>Пароль <span class="require">*</span></label>
-                    <input type="password" name="password">
-                    <div class="errortext"></div>
-                </div>
-                <div class="inputgroup">
-                    <label>Пароль еще раз <span class="require">*</span></label>
-                    <input type="password" name="password2">
-                    <div class="errortext"></div>
-                </div>
-                <div class="inputgroup">
-                    <input type="submit" value="Зарегистрироваться" class="button">
-                </div>
-                <p>* - Обязательные поля для заполнения</p>
-            </form>
-        </div>
+        <div class="popup-wrap"></div>
         <div class="popup login">
             <div class="title">Авторизация</div>
             <form class="form">
@@ -93,7 +54,7 @@
                     <input type="submit" value="Отправить" class="button">
                 </div>
             </form>
-        </div> -->
+        </div>
 
         <div class="head">
             <div class="center1600">
@@ -102,15 +63,13 @@
                     Bitrix Controller
                 </a>
                 <div class="menu">
-                    <a href="/courses/">Сайты</a>
-                    <a href="/auth/" class="button">Авторизация</a>
-                    <?/* if (!$main->isAuth()) {?>
-                    <a href="/register/" class="reg">Регистрация</a>
-                    <a href="/login/" class="button log">Войти</a>
+                    <a href="/sites/">Сайты</a>
+                    <?if (!$main->isAuth()) {?>
+                        <a href="/login/" class="button log">Войти</a>
                     <?} else {?>
-                        <a href="/cabinet/" class="button">Личный кабинет</a>
+                        <a href="/users/">Пользователи</a>
                         <a href="/logout/">Выйти</a>
-                    <?}*/?>
+                    <?}?>
                 </div>
                 <div class="clear"></div>
             </div>
