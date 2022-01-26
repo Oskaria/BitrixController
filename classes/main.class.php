@@ -159,7 +159,7 @@ class Main {
     }
 
     public function getSitesList($page = 1, $count = 10, $sort = "ASC") {
-        if (!($stmt = $this->mysql->prepare("SELECT * FROM `sites` ORDER BY `id` ".($sort == "ASC" ? "ASC":"DESC")." LIMIT ?,?"))) {
+        if (!($stmt = $this->mysql->prepare("SELECT * FROM `sites` ORDER BY `created` ".($sort == "ASC" ? "ASC":"DESC")." LIMIT ?,?"))) {
             return array();
         } else {
             $i = $count*$page-$count;
@@ -188,23 +188,18 @@ class Main {
             $this->last_error = "URL не указан или указан некорректно.";
             return false;
         }
-
         if ($isBitrix && ($admin_login == "" || $admin_password == "")) {
             $this->last_error = "Не указан логин или пароль пользователя администратора. Эти поля обязательны для заполнения, для сайтов на Битриксе.";
             return false;
         }
-
         if ($protocol != "http" || $protocol != "https") {
             $protocol = "https";
         }
-
         if (strlen($name) < 1) {
             $name = $url;
         }
-
         $url = $protocol."://".$url;
         $new_guid = $this->guid();
-
         if ($isBitrix) {
             $client_id = md5(time().md5($url));
             $client_secret = md5(rand(0,100).time().md5($url).rand(0,100));
@@ -214,7 +209,6 @@ class Main {
             $client_secret = "";
             $auth_data = '';
         }
-
         if (!($stmt = $this->mysql->prepare("INSERT INTO `sites` (`guid`, `name`, `url`, `status`, `is_bitrix`, `client_id`, `client_secret`, `auth_data`, `owner`, `created`) VALUES (?, ?, ?, 0, ?, ?, ?, ?, ?, ".time().")"))) {
             return false;
         } else {
@@ -232,7 +226,6 @@ class Main {
                 }
             }
         }
-        
     }
 
     public function translit($value, $file = false) {

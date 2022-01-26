@@ -96,6 +96,25 @@ class BX_Controller {
         return json_decode(urldecode($output['text']), true);
     }
 
+    public function bitrixPhpRun($member_id, $member_secret, $site_url, $reqString) {
+        $parameters = array(
+            'member_id' => $member_id,
+            'secret_id' => $member_secret,
+            'command'   => $reqString
+        );
+        $data = array(
+            'operation'    => 'run_immediate',
+            'session_id' => '',
+            'parameters'    => base64_encode(serialize($parameters)),
+            'member_id'     => $member_id,
+            'secret_id'     => $member_secret,
+            'encoding'      => 'UTF-8',
+            'hash'          => md5("run_immediate|".serialize($parameters)."|".$member_secret)
+        );
+        parse_str(urldecode($this->cURL($site_url, $data)), $output);
+        return $output['text'];
+    }
+
     public function getBitrixPhpRunResult($member_id, $member_secret, $site_url, $code) {
         $parameters = array(
             'member_id' => $member_id,
