@@ -176,6 +176,22 @@ class Main {
                         return array();
                     } else {
                         $stmt->close();
+                        foreach ($row as $k=>$site) {
+                            $additionals_ = $this->mysql->query("SELECT `status`,`certificate`,`last_code`,`updates_to` FROM `sites_data` WHERE `guid`='".$site['guid']."'");
+                            if ($additionals_->num_rows > 0) {
+                                $additionals = $additionals_->fetch_assoc();
+                                $row[$k]['workstatus'] = $additionals['status'];
+                                $row[$k]['certificate'] = $additionals['certificate'];
+                                $row[$k]['last_code'] = $additionals['last_code'];
+                                $row[$k]['updates_to'] = $additionals['updates_to'];
+                                if ($additionals['last_code'] != "200" && $additionals['last_code'] != "301") {
+                                    $row[$k]['status'] = 2;
+                                }
+                                if ($additionals['certificate'] < time()) {
+                                    $row[$k]['status'] = 2;
+                                }
+                            }
+                        }
                         return $row;
                     }
                 }
@@ -184,6 +200,10 @@ class Main {
     }
 
     public function addNewSite($protocol, $url, $name, $isBitrix, $admin_login = "", $admin_password = "") {
+        if (!$this->isAuth()) {
+            $this->last_error = "Вы не авторизованы!";
+            return false;
+        }
         if (strlen($url) < 4 || filter_var($url, FILTER_VALIDATE_DOMAIN) != $url) {
             $this->last_error = "URL не указан или указан некорректно.";
             return false;
@@ -198,7 +218,6 @@ class Main {
         if (strlen($name) < 1) {
             $name = $url;
         }
-        $url = $protocol."://".$url;
         $new_guid = $this->guid();
         if ($isBitrix) {
             $client_id = md5(time().md5($url));
@@ -207,12 +226,12 @@ class Main {
         } else {
             $client_id = "";
             $client_secret = "";
-            $auth_data = '';
+            $auth_data = "";
         }
-        if (!($stmt = $this->mysql->prepare("INSERT INTO `sites` (`guid`, `name`, `url`, `status`, `is_bitrix`, `client_id`, `client_secret`, `auth_data`, `owner`, `created`) VALUES (?, ?, ?, 0, ?, ?, ?, ?, ?, ".time().")"))) {
+        if (!($stmt = $this->mysql->prepare("INSERT INTO `sites` (`guid`, `name`, `protocol`, `url`, `status`, `is_bitrix`, `client_id`, `client_secret`, `auth_data`, `owner`, `created`) VALUES (?, ?, ?, ?, 1, ?, ?, ?, ?, ?, ".time().")"))) {
             return false;
         } else {
-            if (!$stmt->bind_param("sssisssi", $new_guid, $name, $url, $isBitrix, $client_id, $client_secret, $auth_data, $this->getCurrentUser()['id'])) {
+            if (!$stmt->bind_param("ssssisssi", $new_guid, $name, $protocol, $url, $isBitrix, $client_id, $client_secret, $auth_data, $this->getCurrentUser()['id'])) {
                 return false;
             } else {
                 if (!$stmt->execute()) {
@@ -226,6 +245,102 @@ class Main {
                 }
             }
         }
+    }
+
+    public function getSite($guid) {
+        if (!($stmt = $this->mysql->prepare("SELECT * FROM `sites` WHERE `guid`=?"))) {
+            return false;
+        } else {
+            if (!$stmt->bind_param("s", $guid)) {
+                return false;
+            } else {
+                if (!$stmt->execute()) {
+                    return false;
+                } else {
+                    $res = $stmt->get_result();
+                    $row = $res->fetch_assoc();
+                    $stmt->close();
+                    return $row;
+                }
+            }
+        }
+    }
+
+    public function clearSiteAuth($guid) {
+        if (!($stmt = $this->mysql->prepare("UPDATE `sites` SET `auth_data` ='' WHERE `guid`=?"))) {
+            return false;
+        } else {
+            if (!$stmt->bind_param("s", $guid)) {
+                return false;
+            } else {
+                if (!$stmt->execute()) {
+                    return false;
+                } else {
+                    $stmt->close();
+                    return true;
+                }
+            }
+        }
+    }
+
+    public function getSiteData($guid) {
+        if (!($stmt = $this->mysql->prepare("SELECT * FROM `sites_data` WHERE `guid`=?"))) {
+            return false;
+        } else {
+            if (!$stmt->bind_param("s", $guid)) {
+                return false;
+            } else {
+                if (!$stmt->execute()) {
+                    return false;
+                } else {
+                    $res = $stmt->get_result();
+                    $row = $res->fetch_assoc();
+                    $stmt->close();
+                    return $row;
+                }
+            }
+        }
+    }
+
+    public function setSiteData($guid, $status, $certificate, $regname, $updates_from, $updates_to, $last_updates, $bitrix_licencekey, $last_code) {
+        if (!($stmt = $this->mysql->prepare("INSERT INTO `sites_data` (`guid`, `status`, `certificate`, `regname`, `updates_from`, `updates_to`, `last_updates`, `bitrix_licencekey`, `last_code`, `updated`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ".time().")"))) {
+            return false;
+        } else {
+            if (!$stmt->bind_param("siisiiiss", $guid, $status, $certificate, $regname, $updates_from, $updates_to, $last_updates, $bitrix_licencekey, $last_code)) {
+                return false;
+            } else {
+                if (!$stmt->execute()) {
+                    return false;
+                } else {
+                    if ($stmt->affected_rows > 0) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+            }
+        }
+    }
+
+    public function updateSiteData($guid, $status, $certificate, $regname, $updates_from, $updates_to, $last_updates, $bitrix_licencekey, $last_code) {
+        if (!($stmt = $this->mysql->prepare("UPDATE `sites_data` SET `status`=?, `certificate`=?, `regname`=?, `updates_from`=?, `updates_to`=?, `last_updates`=?, `bitrix_licencekey`=?, `last_code`=?, `updated`=".time()." WHERE `guid`=?"))) {
+            echo $this->mysql->error;
+            return false;
+        } else {
+            if (!$stmt->bind_param("iisiiisss", $status, $certificate, $regname, $updates_from, $updates_to, $last_updates, $bitrix_licencekey, $last_code, $guid)) {
+                return false;
+            } else {
+                if (!$stmt->execute()) {
+                    return false;
+                } else {
+                    if ($stmt->affected_rows > 0) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+            }
+        } 
     }
 
     public function translit($value, $file = false) {

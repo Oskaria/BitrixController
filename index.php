@@ -6,10 +6,12 @@
 
     $main = new Main;
 
+    include_once(__DIR__."/templates/langs/ru.php");
+
     include_once(__DIR__."/modules/modules.php");
     if (empty($_GET['module'])) {
         include_once(__DIR__."/modules/header.php");
-        include_once(__DIR__."/modules/main.php");
+        include_once(__DIR__."/modules/sites.php");
     } else {
         if (!in_array($_GET['module'].".php", $files)) {
             header("HTTP/1.0 404 Not Found");

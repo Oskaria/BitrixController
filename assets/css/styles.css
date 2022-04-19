@@ -1,3 +1,12 @@
+/** Vars start */
+
+:root {
+    --red-color: #f95157;
+    --green-color: #88dec0;
+}
+  
+/** Vars end */
+
 
 html, body {
     height: 100%;
@@ -30,15 +39,14 @@ iframe {
 
 .button {
     border: 0px;
-    border-radius: 5px;
-    height: 40px;
-    line-height: 40px;
+    border-radius: 25px;
+    height: 50px;
+    line-height: 50px;
     display: inline-block;
-    min-width: 130px;
+    min-width: 170px;
     padding: 0px 30px;
     
-    background: rgb(180,109,164);
-    background: linear-gradient(90deg, rgba(180,109,164,1) 0%, rgba(255,120,172,1) 50%, rgba(250,119,172,1) 100%);    
+    background: var(--red-color);
 
     text-align: center;
     color: white !important;
@@ -63,9 +71,7 @@ iframe {
     z-index: 100;
 }
     .footer {
-        -webkit-box-shadow: 0px 5px 15px 0px rgba(34, 60, 80, 0.2);
-        -moz-box-shadow: 0px 5px 15px 0px rgba(34, 60, 80, 0.2);
-        box-shadow: 0px -5px 15px 0px rgba(34, 60, 80, 0.2);
+        border-top: 1px solid #d5d5d5;
     }
     .push {
         margin-top: 30px;
@@ -124,7 +130,6 @@ a {
     display: inline-block;
     text-decoration: none;
     position: relative;
-    color: #b46da4;
 }
     a:after {
         display: block;
@@ -133,26 +138,29 @@ a {
         content: "";
         height: 1px;
         bottom: 0px;
-        background-color: #b46da4;
+        background-color: var(--red-color)c;
         transition: 0.3s;
     }
     a:hover:after {
         width: 100%;
     }
 
+h1 {
+    font-size: 48px;
+    font-weight: 500;
+}
+
 .head {
-    height: 100px;
-    -webkit-box-shadow: 0px 5px 15px 0px rgba(34, 60, 80, 0.2);
-    -moz-box-shadow: 0px 5px 15px 0px rgba(34, 60, 80, 0.2);
-    box-shadow: 0px 5px 15px 0px rgba(34, 60, 80, 0.2);
+    height: 130px;
     width: 100%;
     min-width: 1000px;
+    border-bottom: 1px solid #d5d5d5;
 }
     .head .menu {
         float: right;
     }
         .menu a {
-            margin: 33px 20px;
+            margin: 57px 20px;
             font-size: 18px;
             color: black;
         }
@@ -161,8 +169,8 @@ a {
     display: block;
     float: left;
     height: 70px;
-    margin-top: 15px;
-    font-size: 30px;
+    margin-top: 45px;
+    font-size: 20px;
     font-weight: 300;
     color: black !important;
 }
@@ -186,82 +194,6 @@ a {
             background-color: rgb(94, 94, 94);
         }
 
-.courses {
-    width: 100%;
-    margin-top: 50px;
-}
-    a.course:after {
-        display: none;
-    }
-    .courses .course {
-        min-height: 300px;
-        display: inline-block;
-        width: 31.999999999%;
-        margin-right: 0.8999%;
-        margin-bottom: 20px;
-        background-size: cover;
-        position: relative;
-        vertical-align: top;
-        transition: 0.3s;
-        background-size: 110%;
-        background-position: center;
-    }
-        .news .course {
-            width: 23.999999999%;
-            margin-right: 0.4999%;
-            min-height: 200px;
-        }
-        .course .c_back {
-            padding: 30px;
-            z-index: 10;
-            box-sizing: border-box;
-            background: rgb(0,0,0);
-            background: linear-gradient(0deg, rgba(0,0,0,0.8) 30%, rgba(0,0,0,0) 100%);
-            width: 100%;
-            height: 100%;
-            position: absolute;
-        }
-            .course:hover {
-                background-size: 105%;
-            }
-        .course .name {
-            color: white;
-            font-size: 18px;
-            font-weight: 700;
-            /* text-shadow: 2px 2px 8px black; */
-        }
-            .news .course .name {
-                font-size: 14px;
-            }
-        
-        .course .descr {
-            color: white;
-            /* background-color: rgba(0,0,0,0.7); */
-            position: absolute;
-            right: 0px;
-            bottom: 0px;
-            left: 0px;
-            padding: 20px 30px;
-            box-sizing: border-box;
-            font-size: 14px;
-            z-index: 11;
-        }
-        .course.listened {
-            opacity: 0.7;
-            position: relative;
-        }
-            .course.listened:before {
-                position: absolute;
-                bottom: 0px;
-                right: 0px;
-                content: "Пройден";
-                font-weight: 700;
-                opacity: 1;
-                color: rgb(236, 37, 37);
-                padding: 20px;
-                z-index: 100;
-            }
-
 .inputgroup {
     display: block;
     position: relative;
@@ -281,7 +213,7 @@ a {
         border-radius: 5px;
     }
     .inputgroup.error input[type='text'], .inputgroup.error input[type='email'], .inputgroup.error input[type='password'] {
-        border-color: red;
+        border-color: var(--red-color);
     }
     
     .inputgroup .errortext {
@@ -290,7 +222,7 @@ a {
         padding: 3px 5px;
     }
         .inputgroup.error {
-            color: red;
+            color: var(--red-color);
         }
             .inputgroup.error .errortext {
                 display: block;
@@ -315,120 +247,66 @@ div.right, div.left {
         float: left;
     }
 
-
-
-/* начало плеера */
-
-.video-container {
-    position: relative;
-    width:1280px;
-    height:720px;
-    margin: auto;
-}
-
-#container {
+.sites {
     width: 100%;
-    height: 100%;
 }
-  
-.btn-fs {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    z-index: 10;
-}
-
-.playbutton {
-    position: absolute;
-    z-index: 10;
-    top: 50%;
-    left: 50%;
-    width: 100px;
-    height: 100px;
-    margin: -50px 0px 0px -50px;
-    cursor: pointer;
-}
-    .playbutton svg {
-        width: 100px;
-        height: 100px;
-        fill: white;
-        transition: 0.3s;
+    .site {
+        padding: 0px 40px 40px 40px;
+        margin: 0px 1% 25px 0px;
+        background-color: #f8f8f8;
+        border-top: 4px solid #ffcc00;
+        display: inline-block;
+        width: 100%;
+        max-width: 48%;
+        vertical-align: top;
+        min-height: 205px;
     }
-        .playbutton:hover svg {
-            fill: #b46da4;
+        .site.up {
+            border-color: var(--green-color);
         }
-  
-.logo_video {
-    position: absolute;
-    top:10px;
-    right: 10px;
-    padding: 5px;
-    line-height: 12px;
-    background-color: rgba(0, 0, 0, 0.6);
-    color: white;
-    font-size: 9px;
-    -ms-user-select: none;
-    -moz-user-select: none;
-    -khtml-user-select: none;
-    -webkit-user-select: none;
-}
-    .logo_video svg {
-        fill: white;
-        width: 50px;
-        height: 50px;
-    }
-  
-.footer_video {
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    height: 100px;
-    text-align: center; 
-    padding: 5px;
-    box-sizing: border-box;
-    background-color: rgba(255, 255, 255, 0.4);
-    color: white;
-    display: none;
-}
-    .footer_video h3 {
-        padding: 0px;
-        margin: 0px;
-        line-height: 40px;
-    }
-        .footer_video .answer {
+        .site.error {
+            border-color: var(--red-color);
+        }
+        .site.warning {
+            border-top: 4px solid #ffcc00;
+        }
+
+        .site .status {
+            font-size: 16px;
+            margin-top: 25px;
+            margin-bottom: 25px;
+            color: #565656;
+        }
+        .site .name {
+            font-size: 24px;
+            font-weight: 500;
+            line-height: 30px;
+            display: block;
+            cursor: pointer;
+            float: left;
+            margin-bottom: 20px;
+        }
+        .site .domain {
+            float: right;
+        }
+            .site .domain a {
+                font-size: 16px;
+                line-height: 30px;
+                color: #282828;
+            }
+                .site .domain a:hover {
+                    border-color: transparent;
+                }
+
+        .site .icons {
             display: inline-block;
-            margin: 0px 10px;
+            margin: 10px 3px 0px 0px;
         }
-
-.video_fail {
-    position: absolute;
-    text-align: center;
-    width: 70%;
-    min-height: 100px;
-    padding: 40px;
-    background-color: black;
-    color: white;
-    left: 15%;
-    top: 50%;
-    margin-top: -100px;
-    font-size: 20px;
-    display: none;
-}
-
-.results_cointainer {
-    background-color: rgba(255, 255, 255, 0.555);
-    width: 300px;
-    padding: 25px;
-    border: 1px solid black;
-    border-radius: 5px;
-    margin: 40px auto;
-    display: none;
-}
-  
-:-webkit-full-screen video {
-    width: 100%;
-    height: 100%;
-}
-
-/* конец плеера */
+            .site .icons svg {
+                fill: #7c7c7c;
+                max-width: 24px;
+                max-height: 24px;
+            }
+                .site.error .icons svg {
+                    fill: var(--red-color);
+                }

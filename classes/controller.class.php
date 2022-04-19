@@ -149,4 +149,26 @@ class BX_Controller {
         return $output['text'];
     }
 
+    public function getCertificateInfo($domain) {
+        $url = 'ssl://'.$domain.':443';
+        $context = stream_context_create(array('ssl' => array('capture_peer_cert' => true,'verify_peer'       => false,'verify_peer_name'  => false)));
+        $fp = stream_socket_client($url, $err_no, $err_str, 30, STREAM_CLIENT_CONNECT, $context);
+        $cert = stream_context_get_params($fp);
+        if (empty($err_no)) {
+            $info = openssl_x509_parse($cert['options']['ssl']['peer_certificate']);
+            return $info;
+        } else {
+            return $err_no;
+        }
+    }
+
+    public function getResponceCode($url) {
+        $headers = @get_headers($url);
+        if (empty($headers[0])) {
+           return false;
+        } else {
+            return substr($headers[0], 9, 3);
+        }
+    }
+
 }
