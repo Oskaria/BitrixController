@@ -1,3 +1,5 @@
+[![CodeFactor](https://www.codefactor.io/repository/github/oskaria/bitrixcontroller/badge)](https://www.codefactor.io/repository/github/oskaria/bitrixcontroller)
+
 # BitrixController
 Standalone версия модуля "Контроллер сайтов" 1С-Битрикс редакции "Энтерпрайз" и Битрикс24 редакций "Корпоративный портал" и выше.
 
